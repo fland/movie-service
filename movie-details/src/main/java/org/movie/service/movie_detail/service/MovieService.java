@@ -1,9 +1,16 @@
 package org.movie.service.movie_detail.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.movie.service.movie_detail.dao.MovieRepository;
+import org.movie.service.movie_detail.exception.MovieNotFoundException;
+import org.movie.service.movie_detail.model.MovieDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 /**
  * @author Maksym Bondarenko
@@ -12,11 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class MovieService {
 
-    @RequestMapping(value = "/movie/{uuid}")
-    public String get(@PathVariable String uuid) {
-        log.info("Movie uuid: {}", uuid);
-        return "{}";
+    private final MovieRepository movieRepository;
+
+    @RequestMapping(value = "/movie/{uuid}", produces = APPLICATION_JSON_UTF8_VALUE,
+            method = RequestMethod.GET)
+    public MovieDetails get(@PathVariable String uuid) {
+        log.info("Requested movie uuid: {}", uuid);
+        MovieDetails movieDetails = movieRepository.getMovieByUuid(uuid);
+        log.info("Retrieved movie details: {}", movieDetails);
+        if (movieDetails == null) {
+            throw new MovieNotFoundException();
+        }
+        return movieDetails;
     }
 }
