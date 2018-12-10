@@ -1,4 +1,4 @@
-package org.movie.service;
+package org.movie.service.movie_detail;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
