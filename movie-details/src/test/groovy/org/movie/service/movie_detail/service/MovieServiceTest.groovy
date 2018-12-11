@@ -21,7 +21,7 @@ class MovieServiceTest extends Specification {
         def movieDesc = 'desc'
 
         when:
-        def movieDetails = movieService.get('1')
+        def movieDetails = movieService.getMovieDetails('1')
 
         then:
         1 * movieRepo.getMovieByUuid('1') >> new MovieDetails(id: movieId, title: movieTitle, description: movieDesc)
@@ -36,7 +36,7 @@ class MovieServiceTest extends Specification {
         def movieService = new MovieService(movieRepo)
 
         when:
-        movieService.get('1')
+        movieService.getMovieDetails('1')
 
         then:
         1 * movieRepo.getMovieByUuid('1') >> null
