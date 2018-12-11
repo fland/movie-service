@@ -28,7 +28,7 @@ public class CommentService {
             method = RequestMethod.GET)
     public List<CommentDetails> getComments(@PathVariable String movieUuid) {
         log.info("Requested comments for movie uuid: {}", movieUuid);
-        List<CommentDetails> comments = commentsRepository.getCommentDetailsByMovieUuid(movieUuid);
+        List<CommentDetails> comments = commentsRepository.getCommentsByMovieUuid(movieUuid);
         log.info("Retrieved comments: {}", comments);
         return comments;
     }

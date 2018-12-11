@@ -2,6 +2,7 @@ package org.movie.service.comment.dao;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NonNull;
 import org.movie.service.comment.model.CommentDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -26,7 +27,7 @@ class CommentsStaticRepository implements CommentsRepository {
     }
 
     @Override
-    public List<CommentDetails> getCommentDetailsByMovieUuid(String movieUuid) {
+    public List<CommentDetails> getCommentsByMovieUuid(@NonNull String movieUuid) {
         return comments.getOrDefault(movieUuid, Collections.emptyList());
     }
 }
