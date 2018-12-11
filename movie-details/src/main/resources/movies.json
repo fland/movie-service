@@ -1,0 +1,17 @@
+{
+  "1": {
+    "id": "1",
+    "title": "First movie",
+    "description": "First static movie"
+  },
+  "2": {
+    "id": "2",
+    "title": "Local movie",
+    "description": "Some local movie description"
+  },
+  "3": {
+    "id": "3",
+    "title": "Grand movie",
+    "description": "Grand movie detailed description"
+  }
+}
