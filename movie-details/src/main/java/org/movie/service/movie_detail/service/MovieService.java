@@ -20,7 +20,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class MovieService {
+class MovieService {
 
     private final MovieRepository movieRepository;
 

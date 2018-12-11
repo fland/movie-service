@@ -16,7 +16,7 @@ import java.util.Map;
  */
 
 @Component
-public class MovieStaticRepository implements MovieRepository {
+class MovieStaticRepository implements MovieRepository {
 
     private final Map<String, MovieDetails> movies;
 
