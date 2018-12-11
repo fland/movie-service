@@ -1,0 +1,41 @@
+{
+  "1": [
+    {
+      "movieId": "1",
+      "userName": "user1",
+      "message": "Great movie1!"
+    },
+    {
+      "movieId": "1",
+      "userName": "hater",
+      "message": "This isn't great :("
+    },
+    {
+      "movieId": "1",
+      "userName": "spammer",
+      "message": "Buy this big toy!"
+    },
+    {
+      "movieId": "1",
+      "userName": "hater",
+      "message": "Oh, this spammers :("
+    }
+  ],
+  "2": [
+    {
+      "movieId": "2",
+      "userName": "user1",
+      "message": "Great movie2!"
+    },
+    {
+      "movieId": "2",
+      "userName": "hater",
+      "message": "This is also boring"
+    },
+    {
+      "movieId": "2",
+      "userName": "spammer",
+      "message": "Buy this big toy!"
+    }
+  ]
+}

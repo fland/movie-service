@@ -26,7 +26,7 @@ class MovieService {
 
     @RequestMapping(value = "/movie/{uuid}", produces = APPLICATION_JSON_UTF8_VALUE,
             method = RequestMethod.GET)
-    public MovieDetails get(@PathVariable String uuid) {
+    public MovieDetails getMovieDetails(@PathVariable String uuid) {
         log.info("Requested movie uuid: {}", uuid);
         MovieDetails movieDetails = movieRepository.getMovieByUuid(uuid);
         log.info("Retrieved movie details: {}", movieDetails);
