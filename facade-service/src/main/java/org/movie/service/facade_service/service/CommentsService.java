@@ -1,11 +1,16 @@
 package org.movie.service.facade_service.service;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.movie.service.facade_service.exception.InternalServiceUnavailableException;
 import org.movie.service.facade_service.model.CommentDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestOperations;
 
 import java.util.List;
 
@@ -14,16 +19,23 @@ import java.util.List;
  * @version 1.0 12.12.18
  */
 @Component
+@Slf4j
+@RequiredArgsConstructor
 class CommentsService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestOperations restTemplate;
 
     @Value("${commentService.comments}")
-    private String commentsServiceCommentsPath;
+    String commentsServiceCommentsPath;
 
-    List<CommentDetails> getComments(String movieId) {
-        return restTemplate.exchange(commentsServiceCommentsPath + movieId,
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<CommentDetails>>() {
-                }).getBody();
+    List<CommentDetails> getComments(@NonNull String movieId) {
+        try {
+            return restTemplate.exchange(commentsServiceCommentsPath + movieId,
+                    HttpMethod.GET, null, new ParameterizedTypeReference<List<CommentDetails>>() {
+                    }).getBody();
+        } catch (ResourceAccessException e) {
+            log.error("Comments service is unavailable: " + e, e);
+            throw new InternalServiceUnavailableException();
+        }
     }
 }

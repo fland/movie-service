@@ -1,5 +1,7 @@
 package org.movie.service.facade_service.service;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.movie.service.facade_service.exception.InternalServiceUnavailableException;
 import org.movie.service.facade_service.exception.MovieNotFoundException;
@@ -8,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestOperations;
 
 /**
  * @author Maksym Bondarenko
@@ -16,14 +18,15 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 class MovieDetailService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestOperations restTemplate;
 
     @Value("${movieDetails.movie}")
-    private String movieDetailsMoviePath;
+    String movieDetailsMoviePath;
 
-    MovieDetails getMovieDetails(String movieId) {
+    MovieDetails getMovieDetails(@NonNull String movieId) {
         MovieDetails movieDetails;
         try {
             movieDetails = restTemplate.getForObject(movieDetailsMoviePath + movieId, MovieDetails.class);
