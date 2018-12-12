@@ -27,7 +27,7 @@ class CommentsStaticRepository implements CommentsRepository {
     }
 
     @Override
-    public List<CommentDetails> getCommentsByMovieUuid(@NonNull String movieUuid) {
-        return comments.getOrDefault(movieUuid, Collections.emptyList());
+    public List<CommentDetails> getCommentsByMovieId(@NonNull String movieId) {
+        return comments.getOrDefault(movieId, Collections.emptyList());
     }
 }

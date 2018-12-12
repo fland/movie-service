@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface CommentsRepository {
 
-    List<CommentDetails> getCommentsByMovieUuid(String movieUuid);
+    List<CommentDetails> getCommentsByMovieId(String movieId);
 }

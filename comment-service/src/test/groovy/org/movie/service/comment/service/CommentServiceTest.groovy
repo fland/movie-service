@@ -24,7 +24,7 @@ class CommentServiceTest extends Specification {
         def actualComments = commentService.getComments(movieId)
 
         then:
-        1 * commentsRepo.getCommentsByMovieUuid(movieId) >> expectedComments
+        1 * commentsRepo.getCommentsByMovieId(movieId) >> expectedComments
         actualComments.containsAll(expectedComments)
         expectedComments.containsAll(actualComments)
     }
@@ -39,7 +39,7 @@ class CommentServiceTest extends Specification {
         def actualComments = commentService.getComments(movieId)
 
         then:
-        1 * commentsRepo.getCommentsByMovieUuid(movieId) >> []
+        1 * commentsRepo.getCommentsByMovieId(movieId) >> []
         actualComments.isEmpty()
     }
 }

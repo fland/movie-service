@@ -24,11 +24,11 @@ class MovieService {
 
     private final MovieRepository movieRepository;
 
-    @RequestMapping(value = "/movie/{uuid}", produces = APPLICATION_JSON_UTF8_VALUE,
+    @RequestMapping(value = "/movie/{id}", produces = APPLICATION_JSON_UTF8_VALUE,
             method = RequestMethod.GET)
-    public MovieDetails getMovieDetails(@PathVariable String uuid) {
-        log.info("Requested movie uuid: {}", uuid);
-        MovieDetails movieDetails = movieRepository.getMovieByUuid(uuid);
+    public MovieDetails getMovieDetails(@PathVariable String id) {
+        log.info("Requested movie id: {}", id);
+        MovieDetails movieDetails = movieRepository.getMovieById(id);
         log.info("Retrieved movie details: {}", movieDetails);
         if (movieDetails == null) {
             throw new MovieNotFoundException();

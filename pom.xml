@@ -18,5 +18,6 @@
     <modules>
         <module>movie-details</module>
         <module>comment-service</module>
+        <module>facade-service</module>
     </modules>
 </project>

@@ -11,28 +11,28 @@ import spock.lang.Unroll
 
 class MovieStaticRepositoryTest extends Specification {
 
-    def "should throw IllegalArgumentException on null movie uuid"() {
+    def "should throw IllegalArgumentException on null movie id"() {
         when:
-        new MovieStaticRepository().getMovieByUuid(null)
+        new MovieStaticRepository().getMovieById(null)
 
         then:
         thrown IllegalArgumentException
     }
 
     @Unroll
-    def "should return expected movie details for movie #movieUuid"() {
+    def "should return expected movie details for movie #movieId"() {
         given:
         def movieRepo = new MovieStaticRepository()
 
         when:
-        def actualMovieDetails = movieRepo.getMovieByUuid(movieUuid)
+        def actualMovieDetails = movieRepo.getMovieById(movieId)
 
         then:
         actualMovieDetails == movieDetails
 
         where:
-        movieUuid | movieDetails
-        '1'       | new MovieDetails(id: '1', title: 'First movie', description: 'First static movie')
-        '2'       | new MovieDetails(id: '2', title: 'Local movie', description: 'Some local movie description')
+        movieId | movieDetails
+        '1'     | new MovieDetails(id: '1', title: 'First movie', description: 'First static movie')
+        '2'     | new MovieDetails(id: '2', title: 'Local movie', description: 'Some local movie description')
     }
 }

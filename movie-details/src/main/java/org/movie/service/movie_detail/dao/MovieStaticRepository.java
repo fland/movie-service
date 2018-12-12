@@ -26,7 +26,7 @@ class MovieStaticRepository implements MovieRepository {
     }
 
     @Override
-    public MovieDetails getMovieByUuid(@NonNull String movieUuid) {
-        return movies.get(movieUuid);
+    public MovieDetails getMovieById(@NonNull String movieId) {
+        return movies.get(movieId);
     }
 }
