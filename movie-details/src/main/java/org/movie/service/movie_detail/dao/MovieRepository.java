@@ -9,5 +9,5 @@ import org.movie.service.movie_detail.model.MovieDetails;
 
 public interface MovieRepository {
 
-    MovieDetails getMovieByUuid(String movieUuid);
+    MovieDetails getMovieById(String movieId);
 }

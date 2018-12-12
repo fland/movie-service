@@ -24,11 +24,11 @@ public class CommentService {
 
     private final CommentsRepository commentsRepository;
 
-    @RequestMapping(value = "/comments/{movieUuid}", produces = APPLICATION_JSON_UTF8_VALUE,
+    @RequestMapping(value = "/comments/{movieId}", produces = APPLICATION_JSON_UTF8_VALUE,
             method = RequestMethod.GET)
-    public List<CommentDetails> getComments(@PathVariable String movieUuid) {
-        log.info("Requested comments for movie uuid: {}", movieUuid);
-        List<CommentDetails> comments = commentsRepository.getCommentsByMovieUuid(movieUuid);
+    public List<CommentDetails> getComments(@PathVariable String movieId) {
+        log.info("Requested comments for movie id: {}", movieId);
+        List<CommentDetails> comments = commentsRepository.getCommentsByMovieId(movieId);
         log.info("Retrieved comments: {}", comments);
         return comments;
     }

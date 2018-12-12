@@ -24,7 +24,7 @@ class MovieServiceTest extends Specification {
         def movieDetails = movieService.getMovieDetails('1')
 
         then:
-        1 * movieRepo.getMovieByUuid('1') >> new MovieDetails(id: movieId, title: movieTitle, description: movieDesc)
+        1 * movieRepo.getMovieById('1') >> new MovieDetails(id: movieId, title: movieTitle, description: movieDesc)
         movieDetails.id == movieId
         movieDetails.title == movieTitle
         movieDetails.description == movieDesc
@@ -39,7 +39,7 @@ class MovieServiceTest extends Specification {
         movieService.getMovieDetails('1')
 
         then:
-        1 * movieRepo.getMovieByUuid('1') >> null
+        1 * movieRepo.getMovieById('1') >> null
         thrown MovieNotFoundException
     }
 }
