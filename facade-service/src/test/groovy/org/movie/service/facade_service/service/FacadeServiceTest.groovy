@@ -1,8 +1,13 @@
 package org.movie.service.facade_service.service
 
+import org.movie.service.facade_service.exception.InvalidRequestBodyException
 import org.movie.service.facade_service.model.CommentDetails
 import org.movie.service.facade_service.model.MovieDetails
+import org.springframework.http.HttpStatus
 import spock.lang.Specification
+import spock.lang.Unroll
+
+import javax.servlet.http.HttpServletRequest
 
 /**
  * @author Maksym Bondarenko
@@ -10,6 +15,45 @@ import spock.lang.Specification
  */
 
 class FacadeServiceTest extends Specification {
+
+    @Unroll
+    def "should throw InvalidRequestBodyException on #movieId movie id"() {
+        given:
+        def movieDetailsService = Stub(MovieDetailService)
+        def commentsService = Stub(CommentsService)
+        def facadeService = new FacadeService(movieDetailsService, commentsService)
+        def request = Stub(HttpServletRequest)
+
+        when:
+        facadeService.postMovieDetails(new MovieDetails(id: movieId, title: 'title', description: 'desc'),
+                request)
+
+        then:
+        thrown InvalidRequestBodyException
+
+        where:
+        movieId << ['', null]
+    }
+
+    def "should return created status for POST movie details"() {
+        given:
+        def movieDetailsService = Stub(MovieDetailService)
+        def commentsService = Stub(CommentsService)
+        def facadeService = new FacadeService(movieDetailsService, commentsService)
+        def request = Mock(HttpServletRequest)
+        def movieId = '2'
+        def location = 'http://localhost:8080/somePath'
+
+        when:
+        def response = facadeService.postMovieDetails(new MovieDetails(id: movieId, title: 'title', description: 'desc'),
+                request)
+
+        then:
+        1 * request.getRequestURL() >> new StringBuffer(location)
+        response.getStatusCode() == HttpStatus.CREATED
+        response.getHeaders().containsKey('Location')
+        response.getHeaders().getLocation().toString() == "$location/$movieId"
+    }
 
     def "should return movie details without comments"() {
         given:
