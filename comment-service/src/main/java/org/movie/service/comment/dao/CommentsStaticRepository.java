@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import org.movie.service.comment.model.CommentDetails;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -22,7 +22,8 @@ class CommentsStaticRepository implements CommentsRepository {
     private final Map<String, List<CommentDetails>> comments;
 
     public CommentsStaticRepository() throws IOException {
-        comments = new ObjectMapper().readValue(ResourceUtils.getFile("classpath:comments.json"), new TypeReference<Map<String, List<CommentDetails>>>() {
+        comments = new ObjectMapper().readValue(new ClassPathResource("comments.json").getInputStream(),
+                new TypeReference<Map<String, List<CommentDetails>>>() {
         });
     }
 
