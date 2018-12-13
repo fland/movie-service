@@ -2,13 +2,16 @@ package org.movie.service.facade_service.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.movie.service.facade_service.exception.InvalidRequestBodyException;
 import org.movie.service.facade_service.model.CommentDetails;
 import org.movie.service.facade_service.model.MovieDetails;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -35,5 +38,16 @@ class FacadeService {
         movieDetails.setComments(comments);
 
         return movieDetails;
+    }
+
+    @RequestMapping(value = "/movie", produces = APPLICATION_JSON_UTF8_VALUE,
+            consumes = APPLICATION_JSON_UTF8_VALUE,
+            method = RequestMethod.POST)
+    public ResponseEntity postMovieDetails(@RequestBody MovieDetails movieDetails, HttpServletRequest request) throws URISyntaxException {
+        if (StringUtils.isEmpty(movieDetails.getId())) {
+            throw new InvalidRequestBodyException("null or empty movie id isn't allowed");
+        }
+        log.info("POST Movie details: {}", movieDetails);
+        return ResponseEntity.created(new URI(request.getRequestURL() + "/" + movieDetails.getId())).build();
     }
 }
