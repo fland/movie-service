@@ -29,6 +29,7 @@ class CommentsService {
     String commentsServiceCommentsPath;
 
     List<CommentDetails> getComments(@NonNull String movieId) {
+        log.info("Getting comments for movie id {}", movieId);
         try {
             return restTemplate.exchange(commentsServiceCommentsPath + movieId,
                     HttpMethod.GET, null, new ParameterizedTypeReference<List<CommentDetails>>() {

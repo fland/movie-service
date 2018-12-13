@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
@@ -30,14 +32,19 @@ class FacadeService {
 
     @RequestMapping(value = "/movie/{movieId}", produces = APPLICATION_JSON_UTF8_VALUE,
             method = RequestMethod.GET)
-    public MovieDetails getMovieDetails(@PathVariable String movieId) {
+    public MovieDetails getMovieDetails(@PathVariable String movieId) throws ExecutionException, InterruptedException {
         log.info("Requested movie id: {}", movieId);
 
-        MovieDetails movieDetails = movieDetailService.getMovieDetails(movieId);
-        List<CommentDetails> comments = commentsService.getComments(movieId);
-        movieDetails.setComments(comments);
+        CompletableFuture<MovieDetails> movieDetailsFuture =
+                CompletableFuture.supplyAsync(() -> movieDetailService.getMovieDetails(movieId));
+        CompletableFuture<List<CommentDetails>> commentsFuture =
+                CompletableFuture.supplyAsync(() -> commentsService.getComments(movieId));
 
-        return movieDetails;
+        return movieDetailsFuture.thenCombine(commentsFuture, (movieDetails, comments) ->
+        {
+            movieDetails.setComments(comments);
+            return movieDetails;
+        }).get();
     }
 
     @RequestMapping(value = "/movie", produces = APPLICATION_JSON_UTF8_VALUE,
