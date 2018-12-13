@@ -44,10 +44,21 @@ class FacadeService {
             consumes = APPLICATION_JSON_UTF8_VALUE,
             method = RequestMethod.POST)
     public ResponseEntity postMovieDetails(@RequestBody MovieDetails movieDetails, HttpServletRequest request) throws URISyntaxException {
+        log.info("POST Movie details: {}", movieDetails);
         if (StringUtils.isEmpty(movieDetails.getId())) {
             throw new InvalidRequestBodyException("null or empty movie id isn't allowed");
         }
-        log.info("POST Movie details: {}", movieDetails);
         return ResponseEntity.created(new URI(request.getRequestURL() + "/" + movieDetails.getId())).build();
+    }
+
+    @RequestMapping(value = "/comment", produces = APPLICATION_JSON_UTF8_VALUE,
+            consumes = APPLICATION_JSON_UTF8_VALUE,
+            method = RequestMethod.POST)
+    public ResponseEntity postComment(@RequestBody CommentDetails comment) {
+        log.info("POST comment: {}", comment);
+        if (StringUtils.isEmpty(comment.getMovieId())) {
+            throw new InvalidRequestBodyException("null or empty movie id isn't allowed");
+        }
+        return ResponseEntity.ok().build();
     }
 }
