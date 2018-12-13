@@ -20,4 +20,5 @@ public class Config {
     RestOperations getRestTemplate() {
         return new RestTemplate();
     }
+
 }

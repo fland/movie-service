@@ -7,7 +7,9 @@ import org.movie.service.facade_service.exception.InternalServiceUnavailableExce
 import org.movie.service.facade_service.exception.MovieNotFoundException;
 import org.movie.service.facade_service.model.MovieDetails;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestOperations;
@@ -17,8 +19,9 @@ import org.springframework.web.client.RestOperations;
  * @version 1.0 12.12.18
  */
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
+@CacheConfig(cacheNames = {"movies"})
 class MovieDetailService {
 
     private final RestOperations restTemplate;
@@ -26,7 +29,9 @@ class MovieDetailService {
     @Value("${movieDetails.movie}")
     String movieDetailsMoviePath;
 
-    MovieDetails getMovieDetails(@NonNull String movieId) {
+    @Cacheable("movies")
+    public MovieDetails getMovieDetails(@NonNull String movieId) {
+        log.info("Retrieving movie details for movieId {}", movieId);
         MovieDetails movieDetails;
         try {
             movieDetails = restTemplate.getForObject(movieDetailsMoviePath + movieId, MovieDetails.class);
