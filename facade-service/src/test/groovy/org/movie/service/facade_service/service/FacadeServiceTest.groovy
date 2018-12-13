@@ -17,7 +17,37 @@ import javax.servlet.http.HttpServletRequest
 class FacadeServiceTest extends Specification {
 
     @Unroll
-    def "should throw InvalidRequestBodyException on #movieId movie id"() {
+    def "should throw InvalidRequestBodyException on '#movieId' movie id while posting comment"() {
+        given:
+        def movieDetailsService = Stub(MovieDetailService)
+        def commentsService = Stub(CommentsService)
+        def facadeService = new FacadeService(movieDetailsService, commentsService)
+
+        when:
+        facadeService.postComment(new CommentDetails(movieId: movieId, userName: 'user1', message: 'msg'))
+
+        then:
+        thrown InvalidRequestBodyException
+
+        where:
+        movieId << ['', null]
+    }
+
+    def "should return OK status for POST comment"() {
+        given:
+        def movieDetailsService = Stub(MovieDetailService)
+        def commentsService = Stub(CommentsService)
+        def facadeService = new FacadeService(movieDetailsService, commentsService)
+
+        when:
+        def response = facadeService.postComment(new CommentDetails(movieId: '2', userName: 'user1', message: 'msg'))
+
+        then:
+        response.getStatusCode() == HttpStatus.OK
+    }
+
+    @Unroll
+    def "should throw InvalidRequestBodyException on '#movieId' movie id"() {
         given:
         def movieDetailsService = Stub(MovieDetailService)
         def commentsService = Stub(CommentsService)
