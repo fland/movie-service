@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import org.movie.service.movie_detail.model.MovieDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.Map;
  * @version 1.0 11.12.18
  */
 
-@Component
+@Repository
 class MovieStaticRepository implements MovieRepository {
 
     private final Map<String, MovieDetails> movies;

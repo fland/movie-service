@@ -8,7 +8,7 @@ import org.movie.service.facade_service.model.CommentDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestOperations;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @author Maksym Bondarenko
  * @version 1.0 12.12.18
  */
-@Component
+@Service
 @Slf4j
 @RequiredArgsConstructor
 class CommentsService {

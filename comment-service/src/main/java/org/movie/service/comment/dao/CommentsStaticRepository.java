@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import org.movie.service.comment.model.CommentDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.Map;
  * @author Maksym Bondarenko
  * @version 1.0 11.12.18
  */
-@Component
+@Repository
 class CommentsStaticRepository implements CommentsRepository {
 
     private final Map<String, List<CommentDetails>> comments;
